@@ -1,8 +1,10 @@
 import os
 
 import pandas as pd
+import pytest
 
 
+@pytest.mark.data_test
 def test_pandas_data_columns():
     data_path = "data/cleaned_data.csv"
     assert os.path.exists(data_path), f"{data_path} が存在しません。"
@@ -11,6 +13,7 @@ def test_pandas_data_columns():
     assert list(df.columns) == expected_cols, "列名が想定と異なります"
 
 
+@pytest.mark.data_test
 def test_pandas_no_nulls():
     df = pd.read_csv("data/cleaned_data.csv")
     assert not df.isnull().values.any(), "欠損値が存在します"
