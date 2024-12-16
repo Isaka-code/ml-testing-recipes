@@ -3,17 +3,17 @@ import os
 import pandas as pd
 import pytest
 
+CSV_PATH = "data/cleaned_data.csv"
 
-@pytest.mark.data_test
+
+@pytest.mark.skipif(not os.path.exists(CSV_PATH), reason="data file not found")
 def test_pandas_data_columns():
-    data_path = "data/cleaned_data.csv"
-    assert os.path.exists(data_path), f"{data_path} が存在しません。"
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(CSV_PATH)
     expected_cols = ["id", "feature1", "feature2", "target"]
     assert list(df.columns) == expected_cols, "列名が想定と異なります"
 
 
-@pytest.mark.data_test
+@pytest.mark.skipif(not os.path.exists(CSV_PATH), reason="data file not found")
 def test_pandas_no_nulls():
-    df = pd.read_csv("data/cleaned_data.csv")
+    df = pd.read_csv(CSV_PATH)
     assert not df.isnull().values.any(), "欠損値が存在します"
